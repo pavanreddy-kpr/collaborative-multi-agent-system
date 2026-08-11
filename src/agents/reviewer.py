@@ -1,16 +1,40 @@
+import requests
+
+
 def reviewer_agent(solution):
-    review = f"""
-    REVIEW RESULT
+    prompt = f"""
+You are a Reviewer Agent in a collaborative multi-agent system.
 
-    Solution Received:
-    {solution}
+Review the Developer Agent's solution carefully.
 
-    Review:
-    1. Checked the solution.
-    2. Verified the structure.
-    3. Confirmed the solution is ready.
+Check:
+1. Correctness
+2. Code quality
+3. Bugs
+4. Missing edge cases
+5. Error handling
+6. Maintainability
 
-    Status: APPROVED
-    """
+Developer solution:
 
-    return review
+{solution}
+
+At the very end, you MUST write exactly one of these:
+
+STATUS: APPROVED
+
+or
+
+STATUS: NEEDS IMPROVEMENT
+"""
+
+    response = requests.post(
+        "http://localhost:11434/api/generate",
+        json={
+            "model": "gemma3",
+            "prompt": prompt,
+            "stream": False
+        }
+    )
+
+    return response.json()["response"]

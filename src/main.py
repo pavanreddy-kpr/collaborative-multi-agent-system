@@ -1,25 +1,21 @@
-from agents.planner import planner_agent
-from agents.developer import developer_agent
-from agents.reviewer import reviewer_agent
+from agents.coordinator import coordinator_agent
 
 
 def run_multi_agent_system():
-    print("Collaborative Multi-Agent System")
-    print("--------------------------------")
+    print("=" * 50)
+    print("      COLLABORATIVE MULTI-AGENT SYSTEM")
+    print("=" * 50)
 
-    user_request = input("Enter your task: ")
+    user_request = input("\nEnter your task: ")
 
-    print("\nPlanner Agent is working...")
-    plan = planner_agent(user_request)
-    print(plan)
+    result = coordinator_agent(user_request)
 
-    print("\nDeveloper Agent is working...")
-    solution = developer_agent(plan)
-    print(solution)
+    print("\n" + "=" * 50)
+    print("MULTI-AGENT WORKFLOW COMPLETED")
+    print("=" * 50)
 
-    print("\nReviewer Agent is working...")
-    review = reviewer_agent(solution)
-    print(review)
+    print("\nFinal Review:")
+    print(result["review"])
 
 
 if __name__ == "__main__":
